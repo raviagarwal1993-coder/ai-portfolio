@@ -66,6 +66,7 @@ h2 { font-family: var(--display); font-weight: 600; font-size: 28px; line-height
 .shot img { display: block; width: 100%; height: auto; }
 .shot figcaption { font-size: 14px; color: var(--muted); }
 .shot figcaption b { color: var(--ink); font-weight: 600; }
+.subhead { grid-column: 1 / -1; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 12px 0 -6px; padding-top: 16px; border-top: 1px dashed var(--line); }
 .phone { max-width: 320px; justify-self: center; }
 
 footer { padding-block: 40px 0; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: space-between; color: var(--muted); font-size: 14px; }
@@ -108,6 +109,7 @@ footer strong { color: var(--ink); }
         <li><span class="tick">✓</span><span>A person signs off before anything AI-written is used</span></li>
         <li><span class="tick">✓</span><span>AI features are tested against misleading and hostile prompts</span></li>
         <li><span class="tick">✓</span><span>Exact figures come from code; AI only explains them</span></li>
+        <li><span class="tick">✓</span><span>Every AI feature is registered and can be switched off</span></li>
         <li><span class="tick">✓</span><span>Fictional or public data only</span></li>
       </ul>
       <p class="note">Work in progress, updated regularly. Live walkthroughs available on request.</p>
@@ -118,12 +120,15 @@ footer strong { color: var(--ink); }
     <div class="notes">
       <span class="code">CASE 01 · FLAGSHIP</span>
       <h2 id="p1">NovaBank Resilience Platform</h2>
-      <p>A working resilience tool for a <strong>fictional bank</strong>. It maps business processes to the applications, vendors and sites they depend on, shows what breaks when a dependency fails, and uses AI to answer questions and draft business impact analyses.</p>
+      <p>A working resilience tool for a <strong>fictional bank</strong>. It maps business processes to the applications, vendors and sites they depend on, shows what breaks when a dependency fails, and uses AI to answer questions and draft business impact analyses. It also has a governance layer for its own AI, and a Crisis Room for tabletop exercises.</p>
       <div class="tags">
         <span class="tag">Dependency mapping</span>
         <span class="tag">Impact tracing</span>
         <span class="tag">AI assistant</span>
         <span class="tag">Human sign-off</span>
+        <span class="tag">AI register</span>
+        <span class="tag">Kill switch</span>
+        <span class="tag">Crisis simulation</span>
         <span class="tag warn">Injection-tested</span>
       </div>
       <p class="stack">Next.js · Supabase · Vercel · LLM APIs</p>
@@ -135,6 +140,11 @@ footer strong { color: var(--ink); }
       <figure class="shot wide"><button type="button" data-full="shots/graph.png"><img src="shots/graph.png" alt="Interactive network graph of applications and vendors coloured by tier" width="1185" height="750" loading="lazy"></button><figcaption><b>Dependency picture.</b> Applications and vendors as a network, filterable by tier, site and vendor.</figcaption></figure>
       <figure class="shot"><button type="button" data-full="shots/assistant.png"><img src="shots/assistant.png" alt="AI assistant answering which processes depend on a vendor, showing the lookups it made" width="1186" height="757" loading="lazy"></button><figcaption><b>Ask the register.</b> Read-only AI assistant that shows which records it looked up.</figcaption></figure>
       <figure class="shot"><button type="button" data-full="shots/bia.png"><img src="shots/bia.png" alt="Business impact analysis questionnaire that the AI turns into a draft" width="1188" height="740" loading="lazy"></button><figcaption><b>AI-drafted BIA.</b> Drafts recovery targets from nine questions; nothing is saved until a person signs off.</figcaption></figure>
+      <p class="subhead">AI controls and crisis exercises</p>
+      <figure class="shot wide"><button type="button" data-full="shots/crisis-run.png"><img src="shots/crisis-run.png" alt="Crisis Room replay: a hosting provider outage with the player's decisions and replies from the supervisor and a journalist" width="1800" height="1140" loading="lazy"></button><figcaption><b>Crisis Room.</b> A tabletop exercise where AI plays the supervisor, the press and the vendor. Every AI reply is labelled.</figcaption></figure>
+      <figure class="shot"><button type="button" data-full="shots/crisis-review.png"><img src="shots/crisis-review.png" alt="After-action review summarising the decisions made in the exercise" width="1800" height="1140" loading="lazy"></button><figcaption><b>After-action review.</b> Decisions are scored by fixed rules; the AI only writes the summary.</figcaption></figure>
+      <figure class="shot"><button type="button" data-full="shots/governance.png"><img src="shots/governance.png" alt="AI register listing each AI feature with its risk tier, human oversight, main risks and kill switch" width="1800" height="1140" loading="lazy"></button><figcaption><b>AI register.</b> Each AI feature with its risk tier, human oversight, known risks and switch.</figcaption></figure>
+      <figure class="shot wide"><button type="button" data-full="shots/killswitch.png"><img src="shots/killswitch.png" alt="Kill switch page listing a switch for each AI feature, with who last changed it" width="1800" height="1140" loading="lazy"></button><figcaption><b>Kill switch.</b> Turns any AI feature off at once, with no redeploy. Every change is written to an audit log, and the switch is drill-tested.</figcaption></figure>
     </div>
   </section>
 
@@ -142,22 +152,41 @@ footer strong { color: var(--ink); }
     <div class="notes">
       <span class="code">CASE 02</span>
       <h2 id="p2">Reg-Watch</h2>
-      <p>An automated <strong>regulatory horizon scan</strong>. It collects public updates from central banks and regulators, summarises and tags each one by framework, and drafts a weekly brief. Nothing is published until a person approves it.</p>
+      <p>An automated <strong>regulatory horizon scan</strong>. It collects public updates from central banks and regulators, summarises and tags each one by framework, and drafts a weekly brief. Nothing is published until it passes an approval gate. When a person reviewed a brief and found errors the automatic checks had missed, the checks were tightened and the errors were shown openly next to the AI text.</p>
       <div class="tags">
         <span class="tag">Automated pipeline</span>
         <span class="tag">Framework tagging</span>
         <span class="tag">Approval gate</span>
+        <span class="tag warn">Human review</span>
       </div>
       <p class="stack">Python · GitHub Actions · LLM APIs</p>
     </div>
     <div class="shots">
       <figure class="shot wide"><button type="button" data-full="shots/regwatch.png"><img src="shots/regwatch.png" alt="Weekly regulatory brief with AI summaries, relevance scores and framework tags" width="1191" height="756" loading="lazy"></button><figcaption><b>Weekly brief.</b> Each item links to its source and labels what the AI wrote.</figcaption></figure>
+      <figure class="shot wide"><button type="button" data-full="shots/regwatch-errors.png"><img src="shots/regwatch-errors.png" alt="Known errors found on human review, shown above the AI-written summaries they correct" width="1800" height="1140" loading="lazy"></button><figcaption><b>Human review.</b> Errors a person found are published next to the AI text, not hidden.</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="project" aria-labelledby="p4">
+    <div class="notes">
+      <span class="code">CASE 03</span>
+      <h2 id="p4">Synthetic media and provenance</h2>
+      <p>A short <strong>ad written and animated by an AI coding assistant</strong> for a fictional chai brand, published with a visible AI label and embedded content credentials, plus a bank policy on synthetic media: labelling, consent, and call-back checks against deepfake payment fraud.</p>
+      <div class="tags">
+        <span class="tag">Content credentials (C2PA)</span>
+        <span class="tag">AI labelling</span>
+        <span class="tag warn">Deepfake controls</span>
+      </div>
+      <p class="stack">Remotion · GitHub Actions · c2patool</p>
+    </div>
+    <div class="shots">
+      <figure class="shot wide"><button type="button" data-full="shots/first-sip.png"><img src="shots/first-sip.png" alt="The First Sip ad with a panel showing what was AI-made, the tools used and the content-credentials check" width="1800" height="1140" loading="lazy"></button><figcaption><b>The First Sip.</b> A 15-second ad with a provenance panel: what AI made, what it didn't, and the content-credentials check.</figcaption></figure>
     </div>
   </section>
 
   <section class="project" aria-labelledby="p3">
     <div class="notes">
-      <span class="code">CASE 03</span>
+      <span class="code">CASE 04</span>
       <h2 id="p3">Corporate Carpool</h2>
       <p>A <strong>commuter ride-sharing prototype</strong> for Mumbai office workers: post a ride, request a seat, and manage the trip. Privacy is built in, with only landmark-level locations shown.</p>
       <div class="tags">
