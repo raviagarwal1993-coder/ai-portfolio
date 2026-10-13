@@ -69,6 +69,25 @@ h2 { font-family: var(--display); font-weight: 600; font-size: 28px; line-height
 .subhead { grid-column: 1 / -1; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 12px 0 -6px; padding-top: 16px; border-top: 1px dashed var(--line); }
 .phone { max-width: 320px; justify-self: center; }
 
+/* Case 05: security ledger and control cards */
+.notes a { color: var(--accent); font-weight: 500; }
+.ledger { grid-column: 1 / -1; width: 100%; border-collapse: collapse; font-size: 14.5px; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.ledger th, .ledger td { text-align: left; vertical-align: top; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+.ledger thead th { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); background: var(--band); }
+.ledger tbody tr:last-child td { border-bottom: 0; }
+.ledger td:first-child { color: var(--muted); width: 46%; }
+.ledger td:first-child::before { content: "\2715"; color: var(--amber); font-weight: 600; margin-right: 8px; }
+.ledger td:last-child::before { content: "\2713"; color: var(--accent); font-weight: 600; margin-right: 8px; }
+.control { border: 1px solid var(--line); border-radius: 6px; padding: 16px 18px; box-shadow: var(--shadow); }
+.control h3 { font-size: 16px; font-weight: 600; margin: 0 0 6px; }
+.control p { margin: 0; color: var(--muted); font-size: 14.5px; }
+.callout { grid-column: 1 / -1; border-radius: 6px; padding: 18px 20px; background: var(--accent-soft); }
+.callout.warn { background: var(--amber-soft); }
+.callout h3 { font-size: 16px; font-weight: 600; margin: 0 0 6px; }
+.callout.warn h3 { color: var(--amber); }
+.callout p, .callout li { margin: 0; font-size: 14.5px; }
+.callout ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+
 footer { padding-block: 40px 0; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: space-between; color: var(--muted); font-size: 14px; }
 footer strong { color: var(--ink); }
 
@@ -201,6 +220,60 @@ footer strong { color: var(--ink); }
       <figure class="shot phone"><button type="button" data-full="shots/carpool-trips.png"><img src="shots/carpool-trips.png" alt="My Trips screen listing offered rides, seats left and accepted passengers" width="780" height="1688" loading="lazy"></button><figcaption><b>My trips.</b> Rides you offer, seats left and who is riding with you.</figcaption></figure>
       <figure class="shot phone"><button type="button" data-full="shots/carpool-route.png"><img src="shots/carpool-route.png" alt="Approximate route from BKC to Dadar on an open map" width="780" height="1688" loading="lazy"></button><figcaption><b>Route view.</b> An approximate route on an open map; no exact addresses.</figcaption></figure>
       <figure class="shot phone"><button type="button" data-full="shots/carpool-consent.png"><img src="shots/carpool-consent.png" alt="Consent preferences screen with granted and withdrawn consents" width="780" height="1688" loading="lazy"></button><figcaption><b>Consent.</b> People choose what data is used and can withdraw at any time.</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="project" aria-labelledby="p5">
+    <div class="notes">
+      <span class="code">CASE 05 · CYBER RESILIENCE</span>
+      <h2 id="p5">Whodunnit: a vibe-coded game, then hardened</h2>
+      <p>A free <strong>murder-mystery logic game</strong> with player accounts, a daily case and a global leaderboard, built end to end with an AI coding assistant. Getting it working was the easy part.</p>
+      <p>A security review against the live database found that <strong>player emails were stored in plain text</strong> and that nothing slowed down repeated sign-in or sign-up attempts. Both were fixed the same day, and the gaps that remain are listed below rather than hidden.</p>
+      <p><strong>The lesson:</strong> AI makes an online game easy to ship, but security has to be asked for and then checked. It does not arrive by default.</p>
+      <div class="tags">
+        <span class="tag">Password hashing</span>
+        <span class="tag">Breached-password check</span>
+        <span class="tag">Rate limits</span>
+        <span class="tag">Data minimisation</span>
+        <span class="tag">Security headers</span>
+        <span class="tag warn">Known limits disclosed</span>
+      </div>
+      <p class="stack">React · TypeScript · Supabase · Vercel</p>
+      <p><a href="https://whodunnit-game.vercel.app/">Play the game</a></p>
+    </div>
+    <div class="shots">
+      <figure class="shot"><button type="button" data-full="shots/whodunnit-home.png"><img src="shots/whodunnit-home.png" alt="Whodunnit home page with stick-figure suspects, the daily case and chapter one levels" width="1280" height="860" loading="lazy"></button><figcaption><b>The game.</b> Guests can try three cases; an account keeps progress and joins the leaderboard.</figcaption></figure>
+      <figure class="shot"><button type="button" data-full="shots/whodunnit-daily.png"><img src="shots/whodunnit-daily.png" alt="A daily case with rooms, suspects, a clue and the detective notebook grids" width="1280" height="830" loading="lazy"></button><figcaption><b>Daily case.</b> The answer is checked on the server, so it never reaches the browser.</figcaption></figure>
+
+      <p class="subhead">What the security review changed</p>
+      <table class="ledger">
+        <thead><tr><th scope="col">Before</th><th scope="col">After</th></tr></thead>
+        <tbody>
+          <tr><td>Emails stored in plain text</td><td>Only a keyed hash is stored; the key is kept outside the database</td></tr>
+          <tr><td>No limit on attempts from one connection</td><td>Sign-in and sign-up are rate limited; addresses are kept only as hashes</td></tr>
+          <tr><td>Password hashing below the OWASP minimum</td><td>Raised to OWASP settings; old hashes upgrade at next sign-in</td></tr>
+          <tr><td>Known-breached passwords accepted</td><td>Refused, using Have I Been Pwned without sending the password</td></tr>
+          <tr><td>No browser security headers</td><td>Strict content security policy, HSTS and frame blocking</td></tr>
+        </tbody>
+      </table>
+
+      <p class="subhead">Six things any vibe-coded game must get right</p>
+      <div class="control"><h3>Passwords</h3><p>Never stored. Salted, deliberately slow hashes, a lockout after repeated wrong guesses, and breached passwords refused.</p></div>
+      <div class="control"><h3>Personal data</h3><p>Keep as little as possible. Emails are hashed, and the leaderboard shows display names and scores only.</p></div>
+      <div class="control"><h3>Sign-in answers</h3><p>The same reply, taking the same time, whether the email is unknown or the password is wrong.</p></div>
+      <div class="control"><h3>Sessions</h3><p>Signed tokens that expire. Google sign-ins are verified against Google's own keys.</p></div>
+      <div class="control"><h3>Database</h3><p>The browser never holds a database key. Row-level security is on, and public roles have no access.</p></div>
+      <div class="control"><h3>Abuse and the browser</h3><p>Rate limits on accounts, plus headers that stop injected scripts, framing and downgrade to plain HTTP.</p></div>
+
+      <div class="callout"><h3>Encrypted is not the same as safe</h3><p>The database provider encrypts its disks and all traffic uses TLS. That protects against a stolen disk, not against someone holding the project's keys. Hashing the emails is what protects them in that case.</p></div>
+      <div class="callout warn"><h3>Still not solved</h3>
+        <ul>
+          <li>A single server secret protects email hashes and sessions. It is the weakest point, and rotating it signs everyone out.</li>
+          <li>Session tokens live in browser storage, and there is no "sign out everywhere" yet.</li>
+          <li>Sign-up still reveals whether an email already has an account; rate limits only slow this down.</li>
+          <li>With hashed emails the game cannot email players; password reset still needs an email service.</li>
+        </ul>
+      </div>
     </div>
   </section>
 
