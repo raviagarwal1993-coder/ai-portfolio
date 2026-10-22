@@ -113,6 +113,7 @@ footer strong { color: var(--ink); }
 }
 @media (max-width: 560px) { .shots { grid-template-columns: minmax(0,1fr); } }
 </style>
+<script data-goatcounter="https://GC_CODE.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
 
@@ -239,7 +240,7 @@ footer strong { color: var(--ink); }
         <span class="tag warn">Known limits disclosed</span>
       </div>
       <p class="stack">React · TypeScript · Supabase · Vercel</p>
-      <p><a href="https://whodunnit-game.vercel.app/">Play the game</a></p>
+      <p><a href="https://whodunnit-game.vercel.app/" data-goatcounter-click="ext-whodunnit-game" data-goatcounter-title="Play the game (Whodunnit)">Play the game</a></p>
     </div>
     <div class="shots">
       <figure class="shot"><button type="button" data-full="shots/whodunnit-home.png"><img src="shots/whodunnit-home.png" alt="Whodunnit home page with stick-figure suspects, the daily case and chapter one levels" width="1280" height="860" loading="lazy"></button><figcaption><b>The game.</b> Guests can try three cases; an account keeps progress and joins the leaderboard.</figcaption></figure>
@@ -300,6 +301,7 @@ footer strong { color: var(--ink); }
       img.alt = b.querySelector('img').alt;
       cap.textContent = f.querySelector('figcaption').textContent;
       lb.hidden = false;
+      try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: 'screenshot-' + b.dataset.full.replace('shots/', ''), title: 'Opened screenshot', event: true }); } catch (e) {}
       document.getElementById('lb-close').focus();
     });
   });
